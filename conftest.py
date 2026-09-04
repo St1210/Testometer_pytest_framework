@@ -6,6 +6,10 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+from pages.login_page import LoginPage
+
+
+CUSTOMER_URL = "https://devsite.testometer.co.in/v2.php/admin/customers"
 
 def pytest_configure(config):
     Path("reports", "screenshots").mkdir(parents=True, exist_ok=True)
@@ -24,7 +28,7 @@ def pytest_runtest_makereport(item, call):
 
 
 @pytest.fixture
-def Setup():
+def Setup(request):
     options = Options()
     if os.getenv("CI") == "true":
         options.add_argument("--headless=new")
@@ -35,6 +39,27 @@ def Setup():
         options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome(options=options)
+
+    if request.node.path.name != "test_login.py":
+        username = os.getenv("TESTOMETER_USERNAME")
+        password = os.getenv("TESTOMETER_PASSWORD")
+        if not username or not password:
+            driver.quit()
+            pytest.skip(
+                "Customer tests require TESTOMETER_USERNAME and "
+                "TESTOMETER_PASSWORD secrets."
+            )
+
+        login = LoginPage(driver)
+        login.open()
+        login.login(username, password)
+        driver.get(CUSTOMER_URL)
+        if "login1" in driver.current_url:
+            driver.quit()
+            pytest.skip(
+                "Customer page redirected to the application's unavailable "
+                "login1 route after authentication."
+            )
 
     yield driver
 

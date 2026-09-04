@@ -120,6 +120,9 @@ Each test run also generates these reports:
 GitHub Actions runs the UI tests on pushes to `main` or `master`, pull requests,
 and manual workflow dispatches. Add `TESTOMETER_USERNAME` and
 `TESTOMETER_PASSWORD` as repository secrets to enable valid-login tests in CI.
+The customer tests use the same secrets because the customer page requires an
+authenticated session. Without them, those tests are skipped with a clear
+reason rather than failing on missing elements.
 Every run uploads the HTML, JUnit XML, and failure screenshots as a downloadable
 artifact named `test-reports-<run-number>`.
 
