@@ -1,0 +1,50 @@
+name: Testometer UI Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      TESTOMETER_USERNAME: ${{ secrets.TESTOMETER_USERNAME }}
+      TESTOMETER_PASSWORD: ${{ secrets.TESTOMETER_PASSWORD }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements.txt
+
+      - name: Run UI tests and create reports
+        run: |
+          mkdir -p reports
+          python -m pytest -v --html=reports/test-report.html --self-contained-html
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports-${{ github.run_number }}
+          path: |
+            reports/test-report.xml
+            reports/test-report.html
+            reports/screenshots/
+          if-no-files-found: warn
+          retention-days: 14

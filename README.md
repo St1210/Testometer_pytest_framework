@@ -109,6 +109,20 @@ Run the complete suite:
 
 pytest -v
 
+Each test run also generates these reports:
+
+- Machine-readable JUnit XML report: `reports/test-report.xml`
+- Visual HTML report: run `powershell -ExecutionPolicy Bypass -File scripts\generate_report.ps1`
+- Failure screenshots: `reports/screenshots/`
+
+## CI/CD
+
+GitHub Actions runs the UI tests on pushes to `main` or `master`, pull requests,
+and manual workflow dispatches. Add `TESTOMETER_USERNAME` and
+`TESTOMETER_PASSWORD` as repository secrets to enable valid-login tests in CI.
+Every run uploads the HTML, JUnit XML, and failure screenshots as a downloadable
+artifact named `test-reports-<run-number>`.
+
 Run a specific test file:
 
 pytest tests/test_add_customer.py -v

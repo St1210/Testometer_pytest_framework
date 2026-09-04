@@ -7,3 +7,4 @@ venv/
 screenshots/
 downloads/
 *.log
+reports/

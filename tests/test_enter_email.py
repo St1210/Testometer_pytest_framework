@@ -11,4 +11,6 @@ def test_enter_email(Setup):
 
     customer.enter_email("sushant@gmail.com")
 
-    
+    actual_value = driver.find_element(*customer.EMAIL).get_attribute("value")
+
+    assert actual_value == "sushant@gmail.com"

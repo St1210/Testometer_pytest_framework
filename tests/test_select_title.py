@@ -13,4 +13,4 @@ def test_select_ttle(Setup):
 
     dropdown = Select(driver.find_element(*customer.TITLE_DROPDOWN))
 
-    assert dropdown.first_selected_option == "Mr."
+    assert dropdown.first_selected_option == "Mr." 
