@@ -1,8 +1,10 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
+ 
+
+from utilities.base_page import BasePage
 
 
-class AddCustomerPage:
+class AddCustomerPage(BasePage):
 
     # =========================
     # CUSTOMER MENU
@@ -170,159 +172,100 @@ class AddCustomerPage:
     )
 
     # =========================
-    # CONSTRUCTOR
-    # =========================
-
-    def __init__(self, driver):
-        self.driver = driver
-
-    # =========================
     # MENU ACTIONS
     # =========================
 
     def click_manage_customers(self):
-        self.driver.find_element(
-            *self.MANAGE_CUSTOMER
-        ).click()
+        self.click(self.MANAGE_CUSTOMER)
 
     def is_manage_customers_page_displayed(self):
-        return self.driver.find_element(
-            *self.MANAGE_CUSTOMER_PAGE
-        ).is_displayed()
+        return self.is_visible(self.MANAGE_CUSTOMER_PAGE)
 
     # =========================
     # ADD CUSTOMER
     # =========================
 
     def click_add_customer(self):
-        self.driver.find_element(
-            *self.ADD_CUSTOMER_BUTTON
-        ).click()
+        self.click(self.ADD_CUSTOMER_BUTTON)
 
     def is_add_customer_page_displayed(self):
-        return self.driver.find_element(
-            *self.ADD_NEW_CUSTOMER_PAGE
-        ).is_displayed()
+        return self.is_visible(
+            self.ADD_NEW_CUSTOMER_PAGE
+        )
 
     # =========================
     # CUSTOMER TYPE
     # =========================
 
     def select_customer_type(self, customer_type):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.SELECT_DROPDOWN
-            )
-        )
-
-        dropdown.select_by_visible_text(customer_type)
+        self.select_by_text(self.SELECT_DROPDOWN,customer_type)
 
     # =========================
     # TITLE
     # =========================
 
     def select_title(self, title):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.TITLE_DROPDOWN
-            )
-        )
-
-        dropdown.select_by_visible_text(title)
+        self.select_by_text(self.TITLE_DROPDOWN,title)
 
     # =========================
     # FIRST NAME
     # =========================
 
     def enter_first_name(self, first_name):
-        self.driver.find_element(
-            *self.FIRST_NAME
-        ).send_keys(first_name)
+        self.enter_text(self.FIRST_NAME,first_name)
 
     # =========================
     # LAST NAME
     # =========================
 
     def enter_last_name(self, last_name):
-        self.driver.find_element(
-            *self.LAST_NAME
-        ).send_keys(last_name)
+        self.enter_text(self.LAST_NAME,last_name)
 
     # =========================
     # MOBILE OPERATOR
     # =========================
 
     def select_mobile_operator(self, operator):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.MOB_OPERATOR_DROPDOWN
-            )
-        )
-
-        dropdown.select_by_visible_text(operator)
+        self.select_by_text(self.MOB_OPERATOR_DROPDOWN,operator)
 
     # =========================
     # CONTACT NUMBER
     # =========================
 
     def enter_contact_number(self, contact_number):
-        self.driver.find_element(
-            *self.CONTACT_NUMBER
-        ).send_keys(contact_number)
+       self.enter_text(self.CONTACT_NUMBER,contact_number)
 
     # =========================
     # SECOND MOBILE OPERATOR
     # =========================
 
     def select_mobile_operator1(self, operator):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.MOB_OPERATOR_DROPDOWN1
-            )
-        )
-
-        dropdown.select_by_visible_text(operator)
+        self.select_by_text(self.MOB_OPERATOR_DROPDOWN1,operator)
 
     # =========================
     # SECOND CONTACT NUMBER
     # =========================
 
-    def enter_contact_number1(self, contact_number):
-        self.driver.find_element(
-            *self.CONTACT_NUMBER1
-        ).send_keys(contact_number)
+    def enter_contact_number1(self, contact_number1):
+        self.enter_text(self.CONTACT_NUMBER1,contact_number1)
 
     # =========================
     # EMAIL
     # =========================
 
     def enter_email(self, email):
-        self.driver.find_element(
-            *self.EMAIL
-        ).send_keys(email)
+        self.enter_text(self.EMAIL,email)
 
     # =========================
     # GENDER
     # =========================
 
     def select_gender(self, gender):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.SELECT_GENDER
-            )
-        )
-
-        dropdown.select_by_visible_text(gender)
+        self.select_by_text(self.SELECT_GENDER,gender)
 
     # =========================
     # BOOKING TYPE
     # =========================
 
     def select_booking_type(self, booking_type):
-        dropdown = Select(
-            self.driver.find_element(
-                *self.SELECT_BOOKING_TYPE
-            )
-        )
-
-        dropdown.select_by_visible_text(booking_type)
+        self.select_by_text(self.SELECT_BOOKING_TYPE,booking_type)
